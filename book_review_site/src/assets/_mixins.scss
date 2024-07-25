@@ -1,0 +1,6 @@
+
+@mixin md_srn{
+    @media screen and (min-width:680px) {
+        @content;
+    }
+}

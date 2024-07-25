@@ -1,0 +1,14 @@
+@use './assets/header';
+@use './assets/footer';
+@import './assets/variables.scss';
+
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+body {
+    color: white;
+    background-color: $background;
+}

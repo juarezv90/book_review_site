@@ -1,3 +1,9 @@
+
+html {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+}
+
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -43,4 +49,11 @@
   */
   #root, #__next {
     isolation: isolate;
+  }
+
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
