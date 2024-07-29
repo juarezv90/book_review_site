@@ -19,9 +19,13 @@ class AddBookView(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [CanAddBooK]
+
+class ViewBooksView(viewsets.ReadOnlyModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author']
-
 
 class ViewSingleBook(generics.RetrieveUpdateAPIView):
     queryset = Book.objects.all()

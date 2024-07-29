@@ -24,9 +24,9 @@ function BookSearch() {
       }, [showForm])
   return (
     <ul className="search">
-        <img src="./search_icon.svg" width={40} height={32} alt="" id="search_icon"/>
+        <img src="/search_icon.svg" width={40} height={32} alt="" id="search_icon"/>
         <li>
-          <form id="search_form" className="search_form" style={showForm ? {height:'auto'}:{height:0}}>
+          <form id="search_form" className="search_form" style={showForm ? {height:'auto'}:{height:0, paddingLeft:8, paddingRight:8, paddingTop:0, paddingBottom:0}}>
             <input className="search" placeholder="search by title or author" />
             <button>Search</button>
           </form>

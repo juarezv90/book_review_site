@@ -1,0 +1,63 @@
+@import './variables';
+
+/*
+Used to style SingleBook.jsx
+*/
+section.single_book {
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: transparentize($color: $dark-accent, $amount: .7);
+
+    article.book_container {
+        img {
+            margin: 0 auto;
+        }
+
+        .book_text{
+            padding: .25rem;
+
+        }
+    }
+
+
+    article.reviews {
+        display: grid;
+        gap: 1rem;
+        justify-content: center;
+        
+        .review {
+            display: flex;
+            flex-direction: column;
+            padding: .5rem;
+            width: 100%;
+            grid-template-columns: 1fr;
+            border: 1px solid $light-accent;
+
+            p.user {
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+
+            p.date {
+                font-size: 10px;
+            }
+
+            p.text {
+                padding: 1rem;
+            }
+
+            &:nth-child(even) {
+                text-align: right;
+            }
+
+            .rating {
+                color: $cta;
+                font-size: 1.25rem;
+                font-weight: 600;
+            }
+        }
+    }
+}

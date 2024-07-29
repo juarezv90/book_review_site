@@ -4,3 +4,9 @@
         @content;
     }
 }
+
+@mixin lg_scrn {
+    @media screen and (min-width:1280px) {
+        @content;
+    }
+}

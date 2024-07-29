@@ -12,7 +12,7 @@ header {
     h1 {
         font-size: 1.5rem;
 
-        @include md_srn{
+        @include md_srn {
             font-size: 2em;
         }
     }
@@ -23,7 +23,7 @@ header {
         margin-left: auto;
 
         @include md_srn {
-            img {  
+            img {
                 display: none;
             }
         }
@@ -32,14 +32,21 @@ header {
         form.search_form {
             position: absolute;
             right: 0;
-            top: calc(1rem + 45px);
+            top: calc(1rem + 34px);
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 6px;
+            gap: 8px;
             width: 200px;
             overflow: hidden;
             transition: 300ms ease;
+            background-color: $dark-accent;
+            padding: 12px 8px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border: .5px solid $cta;
+            border-top: unset;
+
 
             @include md_srn {
                 position: relative;
@@ -48,28 +55,14 @@ header {
                 flex-direction: row;
                 align-items: center;
                 width: 300px;
+                background-color: unset;
+                border: unset;
             }
 
             input {
                 width: 200px;
                 padding: 4px;
                 width: 100%;
-            }
-
-            button {
-                margin-left: 8px;
-                padding: 6px;
-                background-color: $primary;
-                color: $background;
-                border: none;
-                cursor: pointer;
-                transition: 300ms ease-in-out;
-                width: fit-content;
-                padding: .25rem 1.5rem;
-
-                &:hover {
-                    background-color: $cta;
-                }
             }
         }
 

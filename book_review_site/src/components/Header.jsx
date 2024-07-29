@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../App";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import BookSearch from "./BookSearch";
+import { myUserContext } from "../App"
 
 function Header() {
   const [mobileHeight, setMobileHeight] = useState(0);
-
-  const { user } = useContext(UserContext);
-
+  const { user } = myUserContext()
+console.log(user);
   const links = [
     {
       link: "/",
@@ -39,11 +38,9 @@ function Header() {
   const loadlinks = (link, key) => {
     if (link.visible) {
       return (
-        <li key={key}>
-          <Link to={link.link} relative="path">
-            {link.name}
-          </Link>
-        </li>
+        <Link to={link.link} relative="path" key={key}>
+          <li>{link.name}</li>
+        </Link>
       );
     }
   };
@@ -59,8 +56,9 @@ function Header() {
         setMobileHeight(mobileHeightInner);
       }
     };
-    navbar.addEventListener("click", showMenu);
 
+    navbar.addEventListener("click", showMenu);
+    
     return () => {
       navbar.removeEventListener("click", showMenu);
     };
@@ -68,7 +66,9 @@ function Header() {
 
   return (
     <header>
-      <h1>The Book Club</h1>
+      <Link to={"/"}>
+        <h1>The Book Club</h1>
+      </Link>
       <BookSearch />
       <nav id="mobile_nav">
         <div className="line"></div>

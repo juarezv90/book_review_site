@@ -36,11 +36,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return user
 
 class BookSerializer(serializers.ModelSerializer):
+    number_of_likes = serializers.SerializerMethodField()
 
     class Meta:
         model = Book
-        fields = "__all__"
+        exclude = ['likes']
 
+    def get_number_of_likes(self, obj):
+        return obj.number_of_likes()
+    
 class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
 

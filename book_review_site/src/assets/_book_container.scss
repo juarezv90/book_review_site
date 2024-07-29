@@ -1,0 +1,44 @@
+@import './variables';
+@import './mixins';
+
+#book_container {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+
+    @include md_srn{
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+    }
+
+    @include lg_scrn{
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    article.book_articles {
+        padding: 1rem;
+        background-color: $dark-accent;
+        border: 1px solid $light-accent;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        h2 {
+            width: 20ch;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        img {
+            margin-top: auto;
+            height: 300px;
+            object-fit: contain;
+            margin: 1rem 0;
+
+        }
+    }
+}
