@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Book({ book }) {
   return (
-    <Link key={book.isbn} to={`books/${book.isbn}`}>
+    <Link key={book.isbn} to={`/books/${book.isbn}`}>
       <article className="book_articles">
         <img src={book.book_img} alt="book image" />
         <h2>{book.title}</h2>

@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status,filters
-from .permissions import CanAddBooK
+from .permissions import BookPrivileges
 
 CustomUser = get_user_model()
 
@@ -18,12 +18,7 @@ class CreateUserView(generics.CreateAPIView):
 class AddBookView(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [CanAddBooK]
-
-class ViewBooksView(viewsets.ReadOnlyModelViewSet):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [BookPrivileges]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author']
 

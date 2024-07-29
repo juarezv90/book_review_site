@@ -6,7 +6,8 @@ import { myUserContext } from "../App"
 function Header() {
   const [mobileHeight, setMobileHeight] = useState(0);
   const { user } = myUserContext()
-console.log(user);
+
+  //Link object structured with control
   const links = [
     {
       link: "/",
@@ -35,6 +36,7 @@ console.log(user);
     },
   ];
 
+  //Function used to populate links to nav bar menu
   const loadlinks = (link, key) => {
     if (link.visible) {
       return (
@@ -44,6 +46,8 @@ console.log(user);
       );
     }
   };
+
+
   useEffect(() => {
     const navbar = document.getElementById("mobile_nav");
     const showMenu = () => {

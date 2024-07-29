@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { myUserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
+const userTemplate = { username: "", password: "" };
+
 function Login() {
-  const { user, setUser } = myUserContext();
+  const { setUser } = myUserContext();
   let navigate = useNavigate();
-  const [username, setUsername] = useState({
-    username: "",
-    password: "",
-  });
+  const [username, setUsername] = useState(userTemplate);
+
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -36,10 +36,27 @@ function Login() {
         password: username.password,
       }),
     })
-      .then((response) => response.json())
-      .then((json) => setUser(json))
-      .catch((e) => console.log(e))
-      
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((data) => {
+            throw new Error(data.detail || "Login Failed");
+          });
+        }
+        return response.json();
+      })
+      .then((json) => {
+        setUser(json);
+        navigate("/");
+      })
+      .catch((e) => {
+        setError(e.message + ". Please Try again");
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setUsername(userTemplate);
+      });
   };
 
   return (
@@ -64,8 +81,8 @@ function Login() {
           required
         />
         <button>Login</button>
+        {error && <p>{error}</p>}
       </form>
-      {error && <p>{error}</p>}
     </section>
   );
 }

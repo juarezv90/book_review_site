@@ -27,17 +27,26 @@ export function getBook(isbn) {
   const [book, setBook] = useState({});
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [bookError, setBookError] = useState("");
+  const [reviewError, setReviewError] = useState("")
 
   useEffect(() => {
     setLoading(true);
-    setError("");
+    setBookError("");
+    setReviewError("")
     setBook([]);
 
     fetch("http://127.0.0.1:8000/books/" + isbn)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((data) => {
+            throw new Error("Book Not Found");
+          });
+        }
+        return response.json();
+      })
       .then((json) => setBook(json))
-      .catch((e) => setError("Could not find book"))
+      .catch((e) => setBookError(e.message))
       .finally(() => setLoading(false));
   }, []);
 
@@ -46,9 +55,9 @@ export function getBook(isbn) {
     fetch("http://127.0.0.1:8000/books/" + isbn + "/reviews/")
       .then((response) => response.json())
       .then((json) => setReviews(json))
-      .catch((e) => setError("Error loading reviews"))
+      .catch((e) => setReviewError("Error loading reviews"))
       .finally(() => setLoading(false));
-  },[]);
+  }, []);
 
-  return { book, reviews, loading, error };
+  return { book, reviews, loading, bookError, reviewError };
 }

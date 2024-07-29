@@ -17,7 +17,7 @@ With being able to add books and users, backend is able to handle uploading imag
 | api/token/refresh/ [name='token_refresh']                   | endpoint to request refresh of user token using reset token provided at time of sign in.                                                                                    |
 | register/ [name='register']                                 | [registration](#registration_json) endpoint.                                                                                                                                |
 | api/books/                                                  | returns list of books from back end with **GET** request, if used is admin and provides authorized token in header, **POST** request to endpoint will add book to databases |
-| books/<int:isbn> [name='book_detail']                       | takes ISBN into parameter and return [full book details in json](#full_book_details)                                                                                        |
+| books/<int:isbn> [name='book_detail']                       | takes ISBN into parameter and return [full book details in json](#full_book)                                                                                        |
 | books/<int:isbn>/reviews/ [name='book-reviews']             | used to get [reviews](#reviews) for ISBN of book being passed                                                                                                               |
 | books/<int:isbn>/makereviews/ [name='create_delete_review'] | used to [create review](#create_review) on single book, requires **POST** request to contain the user's token in the header be authed in teh backend to be added            |
 
@@ -54,7 +54,7 @@ returns
 }
 ```
 
-### Full single Book Page {#full*book*}
+### Full single Book Page {#full_book}
 
 returns:
 
