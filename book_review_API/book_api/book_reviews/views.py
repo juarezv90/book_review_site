@@ -6,6 +6,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAu
 from rest_framework.response import Response
 from rest_framework import status,filters
 from .permissions import BookPrivileges
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 CustomUser = get_user_model()
 
@@ -88,4 +90,29 @@ class ReviewCreateDeleteView(generics.GenericAPIView):
         review.delete()
 
         return Response({'status':'review deleted'}, status=status.HTTP_204_NO_CONTENT)
-    
+
+class ProfileView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        user_data = {
+            'id':user.id,
+            'username':user.username,
+            'email':user.email,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+        }
+        return Response(user_data, status=status.HTTP_200_OK)
+
+class TokenVerifyView(generics.views.APIView):
+    permission_classes=[IsAuthenticated]
+
+    def post(self, request):
+        token = request.data.get('token')
+        try:
+            AccessToken(token)
+            return Response({"detail":"Token is Valid"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"detail":"Token is invalid or Expired"}, status=status.HTTP_401_UNAUTHORIZED)

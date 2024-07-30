@@ -2,11 +2,19 @@ import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import BookSearch from "./BookSearch";
 import { myUserContext } from "../App"
+import { verifyToken } from "../api_calls/userLogin";
 
 function Header() {
   const [mobileHeight, setMobileHeight] = useState(0);
-  const { user } = myUserContext()
+  const { user,setUser } = myUserContext()
 
+  useEffect(()=> {
+    const token = sessionStorage;
+    if (token.length) {
+      verifyToken(token.access).then(data=> data ? setUser(token) : setUser({}) )
+    }
+  }, [setUser])
+  
   //Link object structured with control
   const links = [
     {
@@ -30,7 +38,7 @@ function Header() {
       name: "Sign up",
     },
     {
-      link: "/profile",
+      link: "/user/profile",
       visible: user ? true : false,
       name: "Profile",
     },

@@ -46,7 +46,9 @@ function Login() {
       })
       .then((json) => {
         setUser(json);
-        navigate("/");
+        sessionStorage.setItem("access",json.access)
+        sessionStorage.setItem("refresh",json.refresh)
+        navigate("/user/profile/");
       })
       .catch((e) => {
         setError(e.message + ". Please Try again");

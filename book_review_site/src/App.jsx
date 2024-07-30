@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import SingleBook from "./components/SingleBook";
 import SearchResultsPage from "./components/SearchResultsPage";
+import ProfilePage from "./components/ProfilePage";
 
 const UserContext = createContext();
 
@@ -26,6 +27,7 @@ function App() {
               <Route exact path="/login" Component={Login} />
               <Route path="books/:isbn" Component={SingleBook} />
               <Route path="book-search/:search" Component={SearchResultsPage} />
+              <Route path="user/profile" Component={ProfilePage}/>
             </Routes>
           </main>
           <Footer />
