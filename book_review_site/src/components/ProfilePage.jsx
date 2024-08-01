@@ -25,7 +25,7 @@ function ProfilePage() {
   return (
     <section className="profile_page">
       <article className="profile">
-        <h1>{profile.username}</h1>
+        <h1>Username: {profile.username}</h1>
         <p>{profile.email}</p>
         <p>{profile.first_name + " " + profile.last_name}</p>
       </article>

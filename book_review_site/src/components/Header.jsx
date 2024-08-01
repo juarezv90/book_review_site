@@ -11,7 +11,7 @@ function Header() {
   useEffect(()=> {
     const token = sessionStorage;
     if (token.length) {
-      verifyToken(token.access).then(data=> data ? setUser(token) : setUser({}) )
+      verifyToken(token.access).then(data=> data ? setUser(token) : setUser(0) )
     }
   }, [setUser])
   
@@ -33,7 +33,7 @@ function Header() {
       name: "Login",
     },
     {
-      link: "/signup",
+      link: "/user/signup",
       visible: !user ? true : false,
       name: "Sign up",
     },

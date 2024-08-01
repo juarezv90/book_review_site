@@ -23,6 +23,7 @@ class Book(models.Model):
     series = models.BooleanField(default=False)
     isbn = models.IntegerField(primary_key=True)
     likes = models.ManyToManyField(CustomUser, related_name="book_likes", blank=True)
+    published_date = models.DateField()
 
     def __str__(self) -> str:
         return f'"{self.title}" by {self.author}'

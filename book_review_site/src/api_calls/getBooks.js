@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export function getBooks(url) {
   const [data, setData] = useState([]);
@@ -23,41 +23,117 @@ export function getBooks(url) {
   return { data, loading, error };
 }
 
-export function getBook(isbn) {
-  const [book, setBook] = useState({});
+export function useBookData(isbn) {
+  const url = "http://127.0.0.1:8000/books/" + isbn;
+  const [book, setBook] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [bookLoading, setBookLoading] = useState(false);
+  const [reviewsLoading, setReviewsLoading] = useState(false);
   const [bookError, setBookError] = useState("");
-  const [reviewError, setReviewError] = useState("")
 
   useEffect(() => {
-    setLoading(true);
+    setBookLoading(true);
     setBookError("");
-    setReviewError("")
-    setBook([]);
 
-    fetch("http://127.0.0.1:8000/books/" + isbn)
-      .then((response) => {
+    const fetchBook = async () => {
+      try {
+        const response = await fetch(url);
         if (!response.ok) {
-          return response.json().then((data) => {
-            throw new Error("Book Not Found");
-          });
+          const data = await response.json();
+          throw new Error(data.message || "Error loading book");
         }
-        return response.json();
-      })
-      .then((json) => setBook(json))
-      .catch((e) => setBookError(e.message))
-      .finally(() => setLoading(false));
-  }, []);
+        const data = await response.json();
+        setBook(data);
+      } catch (err) {
+        setBookError(err.message);
+      } finally {
+        setBookLoading(false);
+      }
+    };
+
+    fetchBook();
+  }, [isbn]);
 
   useEffect(() => {
-    setLoading(true);
-    fetch("http://127.0.0.1:8000/books/" + isbn + "/reviews/")
-      .then((response) => response.json())
-      .then((json) => setReviews(json))
-      .catch((e) => setReviewError("Error loading reviews"))
-      .finally(() => setLoading(false));
-  }, []);
+    const url = "http://127.0.0.1:8000/books/" + isbn + "/reviews/";
+    setReviewsLoading(true);
 
-  return { book, reviews, loading, bookError, reviewError };
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.message || "no reviews found");
+        }
+        const data = await response.json();
+        setReviews(data);
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        setReviewsLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, [isbn]);
+
+  return { book, reviews, bookLoading, reviewsLoading, bookError };
+}
+
+export async function leaveReview(review) {
+  const url = `http://127.0.0.1:8000/books/${review.isbn}/makereviews/`;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${review.token}`,
+      },
+      body: JSON.stringify({
+        review_text: review.review,
+        review_rating: review.ratings,
+        book: review.isbn,
+      }),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      console.log(data);
+      throw new Error(data.errors || "Error Sending Review");
+    }
+
+    const data = await response.json();
+    return [true, data];
+  } catch (err) {
+    return [false, err.message];
+  }
+}
+
+export async function delete_post(id, token, isbn) {
+  const url = `http://127.0.0.1:8000/books/${isbn}/makereviews/`;
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        isbn: isbn,
+        review_id: id,
+      }),
+    });
+
+    if(!response.ok) {
+      const data = await response
+      throw new Error(data.error || "Error deleting comment")
+    }
+
+    const data = await response
+    return [true, data]
+  } catch (err) {
+    return [false, err.message]
+  }
 }

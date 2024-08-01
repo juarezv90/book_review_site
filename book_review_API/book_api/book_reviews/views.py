@@ -57,6 +57,7 @@ class ReviewCreateDeleteView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         isbn = kwargs.get('isbn')
+        
         try:
             book = Book.objects.get(isbn=isbn)
         except Book.DoesNotExist:
@@ -80,7 +81,7 @@ class ReviewCreateDeleteView(generics.GenericAPIView):
         try:
             book = Book.objects.get(isbn=isbn)
         except Book.DoesNotExist:
-            return Response({'errors':'Book not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error':'Book not found'}, status=status.HTTP_404_NOT_FOUND)
         
         try:
             review = generics.get_object_or_404(Review,pk=review_id, book=book, user=request.user)

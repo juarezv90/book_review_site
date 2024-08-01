@@ -42,3 +42,20 @@
         }
     }
 }
+
+#search_results {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+
+    .search_text {
+        padding: 0 1rem;
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    @include md_srn {
+        padding: 1rem;
+    }
+}

@@ -1,74 +1,55 @@
 import React, { useState } from "react";
 import { myUserContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { userLogin } from "../api_calls/userLogin";
 
 const userTemplate = { username: "", password: "" };
 
 function Login() {
+  const [userData, setUserData] = useState(userTemplate);
+  const [error, setError] = useState("");
   const { setUser } = myUserContext();
   let navigate = useNavigate();
-  const [username, setUsername] = useState(userTemplate);
-
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setUsername({
-      ...username,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
     });
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (!username.username || !username.password) {
+    if (!userData.username || !userData.password) {
       return;
     }
 
-    const url = "http://127.0.0.1:8000/api/token/";
+    const [success, result] = await userLogin(userData);
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username.username,
-        password: username.password,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((data) => {
-            throw new Error(data.detail || "Login Failed");
-          });
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setUser(json);
-        sessionStorage.setItem("access",json.access)
-        sessionStorage.setItem("refresh",json.refresh)
-        navigate("/user/profile/");
-      })
-      .catch((e) => {
-        setError(e.message + ". Please Try again");
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setError("");
-        }, 5000);
-        setUsername(userTemplate);
-      });
+    if (!success) {
+      setError(result);
+      setUserData(userTemplate);
+      setTimeout(() => {
+        setError("");
+      }, 4000);
+    } else {
+      setUser(result);
+      sessionStorage.setItem("access", result.access);
+      sessionStorage.setItem("refresh", result.refresh);
+      navigate("/user/profile/");
+    }
   };
 
   return (
     <section id="login">
       <form id="login_form" onSubmit={handleLogin}>
+        <h2>Login In:</h2>
         <input
           type="text"
           name="username"
           id="username"
-          value={username.username}
+          value={userData.username}
           placeholder="username"
           onChange={handleChange}
           required
@@ -77,13 +58,13 @@ function Login() {
           type="password"
           name="password"
           id="password"
-          value={username.password}
+          value={userData.password}
           placeholder="password"
           onChange={handleChange}
           required
         />
         <button>Login</button>
-        {error && <p>{error}</p>}
+        {error && <p aria-live="assertive">{error}</p>}
       </form>
     </section>
   );

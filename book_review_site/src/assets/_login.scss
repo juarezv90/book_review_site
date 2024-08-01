@@ -1,18 +1,27 @@
-@import './variables';
+@import "./variables";
 
 #login {
+  display: grid;
+  height: 80vh;
+  place-items: center;
 
-    #login_form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        justify-content: center;
-        align-items: center;
-        padding: 2rem;
+  #login_form {
+    display: grid;
+    margin: 0 auto;
+    width: fit-content;
+    height: fit-content;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    background-color: $light-accent;
+    padding: 1rem;
+    border-radius: 20px;
 
-        input {
-            width: 15rem;
-            padding: 4px
-        };
+    input {
+      width: 15rem;
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
     }
+  }
 }

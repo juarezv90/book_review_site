@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import SingleBook from "./components/SingleBook";
 import SearchResultsPage from "./components/SearchResultsPage";
 import ProfilePage from "./components/ProfilePage";
+import Signup from "./components/Signup";
 
 const UserContext = createContext();
 
@@ -28,6 +29,7 @@ function App() {
               <Route path="books/:isbn" Component={SingleBook} />
               <Route path="book-search/:search" Component={SearchResultsPage} />
               <Route path="user/profile" Component={ProfilePage}/>
+              <Route path="user/signUp" Component={Signup}/>
             </Routes>
           </main>
           <Footer />

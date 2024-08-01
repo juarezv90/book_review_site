@@ -1,8 +1,9 @@
 # Initial PUSH 7/22
 
-## Contents
-1.[Book Review API](#bookAPI)
-2.[Book Review Site](#front_end)
+|Contents:|
+|-----|
+|1.[Book Review API](#bookAPI)|
+|2.[Book Review Site](#front_end)|
 
 ### Book Review API {#bookAPI}
 
@@ -13,13 +14,13 @@ With being able to add books and users, backend is able to handle uploading imag
 | API Endpoint                                                | Description                                                                                                                                                                 |
 | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | admin/                                                      | main admin page for Django disabled at production.                                                                                                                          |
-| api/token/ [name='token_obtain_pair']                       | endpoint to get [token](#token_json) for user sign in.                                                                                                                      |
-| api/token/refresh/ [name='token_refresh']                   | endpoint to request refresh of user token using reset token provided at time of sign in.                                                                                    |
-| register/ [name='register']                                 | [registration](#registration_json) endpoint.                                                                                                                                |
+| api/token/                      | endpoint to get [token](#token_json) for user sign in.                                                                                                                      |
+| api/token/refresh/                   | endpoint to request refresh of user token using reset token provided at time of sign in.                                                                                    |
+| register/                                  | [registration](#registration_json) endpoint.                                                                                                                                |
 | api/books/                                                  | returns list of books from back end with **GET** request, if used is admin and provides authorized token in header, **POST** request to endpoint will add book to databases |
-| books/<int:isbn> [name='book_detail']                       | takes ISBN into parameter and return [full book details in json](#full_book)                                                                                        |
-| books/<int:isbn>/reviews/ [name='book-reviews']             | used to get [reviews](#reviews) for ISBN of book being passed                                                                                                               |
-| books/<int:isbn>/makereviews/ [name='create_delete_review'] | used to [create review](#create_review) on single book, requires **POST** request to contain the user's token in the header be authed in teh backend to be added            |
+| books/\<int:isbn\>                       | takes ISBN into parameter and return [full book details in json](#full_book)                                                                                        |
+| books/\<int:isbn\>/reviews/             | used to get [reviews](#reviews) for ISBN of book being passed                                                                                                               |
+| books/\<int:isbn\>/makereviews/  | used to [create review](#create_review) on single book, requires **POST** request to contain the user's token in the header be authed in teh backend to be added            |
 
 - images being uploaded will be saved to server and path to image will be stored in database.
 

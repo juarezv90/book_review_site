@@ -1,63 +1,94 @@
-@import './variables';
+@import "./variables";
 
 /*
 Used to style SingleBook.jsx
 */
 section.single_book {
-    padding: 1rem;
+  padding: 1rem;
+  display: grid;
+  width: 100%;
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: transparentize($color: $dark-accent, $amount: 0.7);
+
+  article.book_container {
+    img {
+      margin: 0 auto;
+    }
+
+    .book_text {
+      padding: 0.25rem;
+    }
+  }
+
+  article.reviews {
     display: grid;
     gap: 1rem;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: transparentize($color: $dark-accent, $amount: .7);
-
-    article.book_container {
-        img {
-            margin: 0 auto;
-        }
-
-        .book_text{
-            padding: .25rem;
-
-        }
-    }
 
 
-    article.reviews {
-        display: grid;
+    .review {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem;
+      width: 100%;
+      grid-template-columns: 1fr;
+      border: 1px solid $light-accent;
+
+      p.user {
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+      p.date {
+        font-size: 10px;
+      }
+
+      p.text {
+        padding: 1rem;
+      }
+      .rating {
+        color: $cta;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+
+      .delEdit {
+        display: flex;
+        justify-content: flex-end;
         gap: 1rem;
-        justify-content: center;
+        letter-spacing: 1px;
+        color: $cta;
         
-        .review {
-            display: flex;
-            flex-direction: column;
-            padding: .5rem;
-            width: 100%;
-            grid-template-columns: 1fr;
-            border: 1px solid $light-accent;
-
-            p.user {
-                font-weight: 500;
-                text-transform: uppercase;
-            }
-
-            p.date {
-                font-size: 10px;
-            }
-
-            p.text {
-                padding: 1rem;
-            }
-
-            &:nth-child(even) {
-                text-align: right;
-            }
-
-            .rating {
-                color: $cta;
-                font-size: 1.25rem;
-                font-weight: 600;
-            }
+        span {
+            cursor: pointer;
         }
+      }
     }
+  }
+}
+
+#leave_review {
+  #review_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    p {
+      width: fit-content;
+      margin-right: auto;
+    }
+
+    textarea {
+      width: 100%;
+      height: 10ch;
+    }
+
+    fieldset {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }

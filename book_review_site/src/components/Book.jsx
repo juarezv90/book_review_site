@@ -8,7 +8,7 @@ function Book({ book }) {
         <img src={book.book_img} alt="book image" />
         <h2>{book.title}</h2>
         <p>Author: {book.author}</p>
-        <p>Published: {book.publish_date}</p>
+        <p>Published: {book.published_date}</p>
         <p>ISBN: {book.isbn}</p>
         <p> Likes: {book.number_of_likes ? book.number_of_likes : 0}</p>
         {book.series && <p>Part of Series</p>}
