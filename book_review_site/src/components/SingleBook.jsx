@@ -19,6 +19,8 @@ function SingleBook() {
     }
   }
 
+  console.log(reviews.results);
+
   if (bookLoading) return <p>Loading book, please wait... </p>;
 
   if (bookError) return <p>Error Loading book</p>;
@@ -49,8 +51,8 @@ function SingleBook() {
             <h3>Reviews:</h3>
             {reviewsLoading ? (
               <p>Reviews loading</p>
-            ) : reviews.length > 0 ? (
-              reviews.map((review) => (
+            ) : reviews.results?.length > 0 ? (
+              reviews.results.map((review) => (
                 <div className="review" key={review.id}>
                   <p className="user">{review.user}</p>
                   <p className="date">Reviewed: {review.date_reviewed}</p>

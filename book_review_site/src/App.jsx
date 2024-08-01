@@ -16,10 +16,11 @@ export const myUserContext = () => useContext(UserContext);
 
 function App() {
   const [user, setUser] = useState(0);
+  const [profile, setProfile] = useState({});
 
   return (
     <>
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, setUser, profile, setProfile }}>
         <Router basename="/">
           <Header />
           <main>

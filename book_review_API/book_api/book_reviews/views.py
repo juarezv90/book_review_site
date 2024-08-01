@@ -1,4 +1,4 @@
-from rest_framework import generics,viewsets
+from rest_framework import generics,viewsets, views
 from .serilizers import CustomUserSerializer,BookSerializer, ReviewSerializer, ReviewCreateSerializer
 from .models import Book, Review
 from django.contrib.auth import get_user_model
@@ -8,6 +8,8 @@ from rest_framework import status,filters
 from .permissions import BookPrivileges
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
+import logging
+
 
 CustomUser = get_user_model()
 
@@ -49,6 +51,25 @@ class ReviewBookView(generics.ListAPIView):
         book = generics.get_object_or_404(Book, isbn=isbn)
         
         return Review.objects.filter(book=book)
+    
+class ProfileReviewsViews(views.APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        reviews = Review.objects.filter(user=user)
+        book_ids = reviews.values_list('book', flat=True)
+        books = Book.objects.filter(isbn__in=list(book_ids))
+
+        review_serializer = ReviewSerializer(reviews, many=True)
+        book_serializer = BookSerializer(books, many=True)
+        review_data = {
+            'review_list': review_serializer.data,
+            'book_list': book_serializer.data,
+        }
+        return Response(review_data, status=status.HTTP_200_OK)
+    
 
 class ReviewCreateDeleteView(generics.GenericAPIView):
     queryset = Review.objects.all()
@@ -98,12 +119,14 @@ class ProfileView(generics.RetrieveUpdateDestroyAPIView):
 
     def get(self, request, *args, **kwargs):
         user = request.user
+        permissions = user.get_all_permissions()
         user_data = {
             'id':user.id,
             'username':user.username,
             'email':user.email,
             'first_name':user.first_name,
             'last_name':user.last_name,
+            'permissions':list(permissions),
         }
         return Response(user_data, status=status.HTTP_200_OK)
 

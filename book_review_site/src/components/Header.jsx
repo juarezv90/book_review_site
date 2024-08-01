@@ -1,23 +1,27 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BookSearch from "./BookSearch";
-import { myUserContext } from "../App"
+import { myUserContext } from "../App";
 import { verifyToken } from "../api_calls/userLogin";
 
 function Header() {
   const [mobileHeight, setMobileHeight] = useState(0);
-  const { user,setUser } = myUserContext()
+  const { user, setUser, profile } = myUserContext();
+  // const [permissions, setPermissions] = useState(null);
 
-  useEffect(()=> {
+  useEffect(() => {
     const token = sessionStorage;
     if (token.length > 0) {
-      verifyToken(token.access).then(data=> data ? setUser(token) : (
-        setUser(0),
-        sessionStorage.clear()
-      ))
+      verifyToken(token.access).then((data) => {
+        if (!data) {
+          setUser(0), sessionStorage.clear();
+        } else {
+          setUser(token);
+        }
+      });
     }
-  }, [setUser])
-  
+  }, [user, profile]);
+
   //Link object structured with control
   const links = [
     {
@@ -27,7 +31,7 @@ function Header() {
     },
     {
       link: "/recents",
-      visible: true,
+      visible: false,
       name: "Recents",
     },
     {
@@ -45,22 +49,27 @@ function Header() {
       visible: user ? true : false,
       name: "Profile",
     },
+    {
+      link: "/add-book-form",
+      visible: profile?.permissions?.includes("book_reviews.can_add_book"),
+      name: "Add Book",
+    },
   ];
 
   //Function used to populate links to nav bar menu
   const loadlinks = (link, key) => {
     if (link.visible) {
       return (
-        <Link to={link.link} relative="path" key={key}>
+        <Link to={link.link} relative="path" key={key} className="menuLinks">
           <li>{link.name}</li>
         </Link>
       );
     }
   };
 
-
   useEffect(() => {
     const navbar = document.getElementById("mobile_nav");
+    const main = document.getElementsByTagName("main");
     const showMenu = () => {
       const navlist = document.getElementById("navlist");
       const mobileHeightInner =
@@ -73,9 +82,11 @@ function Header() {
     };
 
     navbar.addEventListener("click", showMenu);
-    
+    main[0].addEventListener("click", () => setMobileHeight(0));
+
     return () => {
       navbar.removeEventListener("click", showMenu);
+      main[0].removeEventListener("click", () => setMobileHeight(0));
     };
   }, [mobileHeight]);
 

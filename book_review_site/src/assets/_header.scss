@@ -1,105 +1,102 @@
-@import './mixins';
-@import './variables';
-
+@import "./mixins";
+@import "./variables";
 
 header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid $cta;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid $cta;
 
-    h1 {
-        font-size: 1.5rem;
+  h1 {
+    font-size: 1.5rem;
 
-        @include md_srn {
-            font-size: 2em;
-        }
+    @include md_srn {
+      font-size: 2em;
+    }
+  }
+
+  ul.search {
+    position: relative;
+    list-style: none;
+    margin-left: auto;
+
+    @include md_srn {
+      img {
+        display: none;
+      }
     }
 
-    ul.search {
+    form.search_form {
+      position: absolute;
+      right: 0;
+      top: calc(1rem + 34px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      width: 200px;
+      overflow: hidden;
+      transition: 300ms ease;
+      background-color: $dark-accent;
+      padding: 12px 8px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border: 0.5px solid $cta;
+      border-top: unset;
+
+      @include md_srn {
         position: relative;
-        list-style: none;
-        margin-left: auto;
+        top: auto;
+        right: auto;
+        flex-direction: row;
+        align-items: center;
+        width: 300px;
+        background-color: unset;
+        border: unset;
+      }
 
-        @include md_srn {
-            img {
-                display: none;
-            }
-        }
+      input {
+        width: 200px;
+        padding: 4px;
+        width: 100%;
+      }
+    }
+  }
 
+  #mobile_nav {
+    position: relative;
+    margin-left: 1rem;
+    width: 32px;
+    cursor: pointer;
 
-        form.search_form {
-            position: absolute;
-            right: 0;
-            top: calc(1rem + 34px);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-            width: 200px;
-            overflow: hidden;
-            transition: 300ms ease;
-            background-color: $dark-accent;
-            padding: 12px 8px;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            border: .5px solid $cta;
-            border-top: unset;
+    .line {
+      width: 32px;
+      height: 2px;
+      background-color: $cta;
 
-
-            @include md_srn {
-                position: relative;
-                top: auto;
-                right: auto;
-                flex-direction: row;
-                align-items: center;
-                width: 300px;
-                background-color: unset;
-                border: unset;
-            }
-
-            input {
-                width: 200px;
-                padding: 4px;
-                width: 100%;
-            }
-        }
-
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
     }
 
-    #mobile_nav {
-        position: relative;
-        margin-left: 1rem;
-        width: 32px;
+    ul.mobile_nav {
+      position: absolute;
+      right: -.6rem;
+      top: calc(1rem + 32px);
+      display: flex;
+      list-style: none;
+      flex-direction: column;
+      overflow: hidden;
+      transition: 300ms ease-in;
+      width: 200px;
+
+      li {
         cursor: pointer;
-
-        .line {
-            width: 32px;
-            height: 2px;
-            background-color: $cta;
-
-            &:not(:last-child) {
-                margin-bottom: 4px;
-            }
-        }
-
-        ul.mobile_nav {
-            position: absolute;
-            right: -1rem;
-            top: calc(1rem + 37px);
-            display: flex;
-            list-style: none;
-            flex-direction: column;
-            overflow: hidden;
-            transition: 300ms ease-in;
-
-            li {
-                cursor: pointer;
-                padding: 1rem 1.25rem;
-                background-color: $dark-accent;
-                border: 1px solid $light-accent;
-            }
-        }
+        padding: 1rem 1.25rem;
+        background-color: $dark-accent;
+        border: 1px solid $light-accent;
+      }
     }
+  }
 }
