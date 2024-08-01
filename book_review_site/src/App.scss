@@ -38,3 +38,11 @@ button {
 #root {
     min-width: 375px;
 }
+
+#pagination {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}

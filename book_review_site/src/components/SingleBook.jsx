@@ -15,7 +15,7 @@ function SingleBook() {
     if(!success){
       console.log(result);
     } else {
-      console.log(result);
+      window.location.reload()
     }
   }
 
@@ -28,9 +28,9 @@ function SingleBook() {
       {book && (
         <section className="single_book">
           <article className="book_container">
-            <img src={book.book_img} alt="" />
+            <img src={book.book_img} alt="" width={300}/>
             <br />
-            <h2 className="title">{book.title}</h2>
+            <h3 className="title">{book.title}</h3>
             <hr />
             <br />
             <p>Author: {book.author}</p>

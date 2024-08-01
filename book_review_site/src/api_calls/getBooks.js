@@ -1,26 +1,35 @@
 import { useState, useEffect } from "react";
 
-export function getBooks(url) {
+export function getBooks() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
+  const [url, setUrl] = useState();
 
   useEffect(() => {
     setLoading(true);
-    setError("");
-    setData([]);
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => {
-        setData(json);
-      })
-      .catch((e) => {
-        setError("There was an error loading books");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+    const handleGettingBook = async () => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data || "error loading book");
+        }
 
-  return { data, loading, error };
+        const data = await response.json();
+        setData(data);
+        setError(null)
+      } catch (err) {
+        setError(err)
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    handleGettingBook();
+  }, [url]);
+
+  return { data, loading, error, setUrl };
 }
 
 export function useBookData(isbn) {
@@ -126,14 +135,14 @@ export async function delete_post(id, token, isbn) {
       }),
     });
 
-    if(!response.ok) {
-      const data = await response
-      throw new Error(data.error || "Error deleting comment")
+    if (!response.ok) {
+      const data = await response;
+      throw new Error(data.error || "Error deleting comment");
     }
 
-    const data = await response
-    return [true, data]
+    const data = await response;
+    return [true, data];
   } catch (err) {
-    return [false, err.message]
+    return [false, err.message];
   }
 }

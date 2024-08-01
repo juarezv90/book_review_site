@@ -38,7 +38,7 @@ function LeaveReview({ isbn }) {
     for (let i = 0; i < 5; i++) {
       if (i + 1 == 5) {
         ratings.push(
-          <>
+          <div className="radio" key={i}>
             <label htmlFor={i + 1}>{i + 1}</label>
             <input
               type="radio"
@@ -50,11 +50,11 @@ function LeaveReview({ isbn }) {
               defaultChecked
               required
             />
-          </>
+          </div>
         );
       } else {
         ratings.push(
-          <>
+          <div className="radio" key={i}>
             <label htmlFor={i + 1}>{i + 1}</label>
             <input
               type="radio"
@@ -65,7 +65,7 @@ function LeaveReview({ isbn }) {
               key={i + "rating"}
               required
             />
-          </>
+          </div>
         );
       }
     }

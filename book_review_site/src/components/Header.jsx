@@ -10,8 +10,11 @@ function Header() {
 
   useEffect(()=> {
     const token = sessionStorage;
-    if (token.length) {
-      verifyToken(token.access).then(data=> data ? setUser(token) : setUser(0) )
+    if (token.length > 0) {
+      verifyToken(token.access).then(data=> data ? setUser(token) : (
+        setUser(0),
+        sessionStorage.clear()
+      ))
     }
   }, [setUser])
   

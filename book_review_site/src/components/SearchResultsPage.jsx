@@ -1,24 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getBooks } from "../api_calls/getBooks";
 import Book from "./Book";
+import PaginationBar from "./PaginationBar";
 
 function SearchResultsPage() {
   const { search } = useParams();
   const searchedTerm = search.split("=")
   const url = "http://127.0.0.1:8000/api/books?" + search;
-  const { data, loading, error } = getBooks(url);
+  const { data, loading,error, setUrl } = getBooks();
+  
+  useEffect(() => {
+    setUrl(url)
+  },[url])
 
   if (loading) return <p>Loading book search</p>
 
+  if (error != null) return <p>Error unable to get books</p>
+  
   return (
+    <>
     <section id="search_results">
-      <p className="search_text">Search Results: "{searchedTerm[1]}"</p>
+      <p className="search_text">{data.count} Search Results for: "{searchedTerm[1]}"</p>
       <div id="book_container">
-        {data && data.map((book, key) => <Book book={book} key={key} />)}
-        {error && <p>No results found</p>}
+        {data.results && data.results.map((book, key) => <Book book={book} key={key} />)}
       </div>
     </section>
+    {data.next || data.previous ? <PaginationBar pages_data={[data,url]} page_count={20} setUrl={setUrl} />: null}
+    </>
   );
 }
 
