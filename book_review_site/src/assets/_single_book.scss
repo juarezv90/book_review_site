@@ -28,6 +28,7 @@ section.single_book {
 
   article.reviews {
     display: grid;
+    width: 100%;
     gap: 1rem;
 
     .review {
@@ -37,6 +38,7 @@ section.single_book {
       width: 100%;
       grid-template-columns: 1fr;
       border: 1px solid $light-accent;
+      justify-content: flex-start;
 
       p.user {
         font-weight: 500;

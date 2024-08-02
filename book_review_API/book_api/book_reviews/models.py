@@ -11,10 +11,8 @@ class CustomUser(AbstractUser):
 
     def __str__(self) -> str:
         return self.username
-    
-'''
-    Model for books
-'''
+ 
+
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
@@ -42,9 +40,7 @@ class Book(models.Model):
             ('can_add_book', "Can add Book"),
         ]
 
-'''
-    Model for leaving reviews
-'''
+
 class Review(models.Model):
 
     class Ratings(models.IntegerChoices):
