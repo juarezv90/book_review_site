@@ -1,0 +1,43 @@
+@import './variables';
+@import './mixins';
+
+section.addBook {
+    display: grid;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+
+    h2 {
+        width: fit-content;
+    }
+
+    form#add_book {
+        width: 100%;
+        overflow: hidden;
+        display: grid;
+        gap: 1rem;
+
+        textarea {
+            width: 100%;
+            resize: none;
+            height: 10ch;
+            margin: 0 auto;
+        }
+
+        input {
+            width: max-content;
+        }
+
+        div {
+            display: flex;
+            gap: 1rem;
+            
+            input {
+                width: fit-content;
+            }
+        }
+
+    }
+
+}
