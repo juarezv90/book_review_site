@@ -10,14 +10,14 @@ function ProfilePage() {
   const reviewsUrl = "http://127.0.0.1:8000/profile/reviews";
 
   useEffect(() => {
-    if (sessionStorage.getItem("profile")) {
-      const data = JSON.parse(sessionStorage.getItem("profile"));
-      setProfile(data);
-    } else if (user.access) {
+    if (user.access) {
       fetchProfile(user.access).then((userDetails) => {
         setProfile(userDetails);
         sessionStorage.setItem("profile", JSON.stringify(userDetails));
       });
+    } else if (sessionStorage.getItem("profile")) {
+      const data = JSON.parse(sessionStorage.getItem("profile"));
+      setProfile(data);
     }
   }, [user.access]);
 
@@ -27,19 +27,18 @@ function ProfilePage() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.access}`,
+          "Authorization": `Bearer ${user.access}`,
         },
       });
 
       if (!response.ok) {
-        console.log(await response.json());
         throw new Error("Error loading reviews");
       }
 
       const data = await response.json();
       setReviews(data);
     } catch (err) {
-      console.log("error");
+      // console.log(err.message);
     }
   };
 
@@ -57,14 +56,21 @@ function ProfilePage() {
   };
 
   const handleDelete = async () => {
-    const [success, result] = await delete_post(reviewSelection.id, user.access, reviewSelection.isbn)
+    const [success, result] = await delete_post(
+      reviewSelection.id,
+      user.access,
+      reviewSelection.isbn
+    );
 
-    if(!success) {
-      console.log(result);
+    if (!success) {
     } else {
-      setReviewSelection(null)
-      handleGetUserReviews()
+      setReviewSelection(null);
+      handleGetUserReviews();
     }
+  };
+
+  if (!profile) {
+    return <p>Loading</p>;
   }
   return (
     <section className="profile_page">
@@ -72,9 +78,19 @@ function ProfilePage() {
         <h1>Username: {profile.username}</h1>
         <p>{profile.email}</p>
         <p>{profile.first_name + " " + profile.last_name}</p>
+        {profile.profile_image && (
+          <>
+            <img
+              src={profile.profile_image.image_url}
+              alt="profile Image"
+              width={300}
+              className="profile_image"
+            />
+          </>
+        )}
         {reviews && (
           <>
-          <p>Your Reviews:</p>
+            <p>Your Reviews:</p>
             <select name="reviews" id="reviews" multiple>
               {reviews.review_list?.map((review) => (
                 <option
@@ -86,7 +102,7 @@ function ProfilePage() {
                 >
                   {reviews.book_list
                     .filter((book) => book.isbn == review.book)
-                    .map((book) => book.title.slice(0,13) + "...")}{" "}
+                    .map((book) => book.title.slice(0, 13) + "...")}{" "}
                   - Reviewed on: {review.date_reviewed}
                 </option>
               ))}
@@ -104,7 +120,10 @@ function ProfilePage() {
           <p className="reviewRating">
             Review Rating: {reviewSelection.review_rating}
           </p>
-          <p className="reviewedDate"> Reviewed: {reviewSelection.date_reviewed}</p>
+          <p className="reviewedDate">
+            {" "}
+            Reviewed: {reviewSelection.date_reviewed}
+          </p>
           <button onClick={handleDelete}>Delete</button>
         </article>
       )}

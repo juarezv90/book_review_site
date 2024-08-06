@@ -7,8 +7,6 @@ import os
 
 
 class CustomUser(AbstractUser):
-    profile_image = models.ImageField(upload_to="profile_images/", null=True, blank=True, default="")
-
     def __str__(self) -> str:
         return self.username
  
@@ -58,3 +56,7 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         return f'{self.book} posted by {self.user} '
+    
+class ProfilePicture(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    profile_image = models.ImageField(upload_to="profile_images/", null=True, blank=True, default="")    

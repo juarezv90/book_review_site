@@ -64,13 +64,14 @@ export async function fetchProfile(token) {
 
     if (!response.ok) {
       const err = await response.json();
+      console.log(err);
+      
       throw new Error(err.detail || "Failed to find user");
     }
 
     const user = await response.json();
     return user;
   } catch (err) {
-    console.log(err.message);
     return null;
   }
 }

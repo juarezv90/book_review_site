@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Book, Review
+from .models import Book, Review,ProfilePicture
 
 CustomUser = get_user_model()
 
@@ -9,7 +9,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password','first_name','last_name','profile_image']
+        fields = ['username', 'email', 'password','first_name','last_name']
     
     def validate(self, data):
         if 'username' not in data:
@@ -31,7 +31,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             password=validated_data['password'],
-            
         )
         return user
 
@@ -62,3 +61,16 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         review = Review.objects.create(user=user, **validated_data)
         return review
+    
+class ProfileImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProfilePicture
+        fields = ['profile_image','image_url']
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if request is not None:
+            return request.build_absolute_uri(obj.profile_image.url)
+        return obj.profile_image.url

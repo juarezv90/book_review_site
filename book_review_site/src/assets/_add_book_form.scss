@@ -4,9 +4,10 @@
 section.addBook {
     display: grid;
     width: 100%;
-    max-width: 800px;
+    max-width: 550px;
     margin: 0 auto;
     padding: 1rem;
+    place-content: center;
 
     h2 {
         width: fit-content;
@@ -17,25 +18,31 @@ section.addBook {
         overflow: hidden;
         display: grid;
         gap: 1rem;
+        padding: 0;
 
         textarea {
-            width: 100%;
             resize: none;
-            height: 10ch;
-            margin: 0 auto;
+            height: 30ch;
+
+            @include md_srn {
+                height: 10ch;
+            }
         }
 
-        input {
-            width: max-content;
+
+        input[type=number] {
+            -moz-appearance: textfield;
         }
 
-        div {
+        input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .series {
             display: flex;
             gap: 1rem;
-            
-            input {
-                width: fit-content;
-            }
+            align-items: center;
         }
 
     }

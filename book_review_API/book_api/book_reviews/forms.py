@@ -5,11 +5,11 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta: 
         model = CustomUser
-        fields = ('username', 'email','profile_image')
+        fields = ('username', 'email')
         fieldsets = (
             (None, {
                 'fields': (
-                    'username', 'email', 'password1', 'password2','profile_image',
+                    'username', 'email', 'password1', 'password2',
                 ),
             }),
         )
@@ -18,4 +18,4 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'profile_image')
+        fields = ('username', 'email')

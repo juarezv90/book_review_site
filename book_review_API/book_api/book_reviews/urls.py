@@ -4,6 +4,7 @@ from .views import CreateUserView, AddBookView, ViewSingleBook, ReviewBookView, 
 from django.conf.urls.static import static
 from django.conf import settings
 router = DefaultRouter()
+
 router.register(r'books', AddBookView, basename="add_book")
 
 urlpatterns = [

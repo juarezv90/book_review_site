@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BookSearch from "./BookSearch";
 import { myUserContext } from "../App";
-import { verifyToken } from "../api_calls/userLogin";
+import { fetchProfile, verifyToken } from "../api_calls/userLogin";
 
 function Header() {
   const [mobileHeight, setMobileHeight] = useState(0);
-  const { user, setUser, profile } = myUserContext();
+  const { user, setUser, profile, setProfile } = myUserContext();
   // const [permissions, setPermissions] = useState(null);
 
   useEffect(() => {
@@ -20,7 +20,19 @@ function Header() {
         }
       });
     }
-  }, [user, profile]);
+  }, [user]);
+
+  useEffect(() => {
+    if (user.access) {
+      fetchProfile(user.access).then((userDetails) => {
+        setProfile(userDetails);
+        sessionStorage.setItem("profile", JSON.stringify(userDetails));
+      });
+    } else if (sessionStorage.getItem("profile")) {
+      const data = JSON.parse(sessionStorage.getItem("profile"));
+      setProfile(data);
+    }
+  }, [user.access]);
 
   //Link object structured with control
   const links = [
@@ -51,7 +63,8 @@ function Header() {
     },
     {
       link: "/add-book-form",
-      visible: profile?.permissions?.includes("book_reviews.can_add_book"),
+      visible:
+        user && profile?.permissions?.includes("book_reviews.can_add_book"),
       name: "Add Book",
     },
   ];

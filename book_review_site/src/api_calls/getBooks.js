@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import API_ENDPOINTS from "../apiConfig";
+import { myUserContext } from "../App";
+import { Form } from "react-router-dom";
 
 export function getBooks() {
   const [data, setData] = useState([]);
@@ -18,9 +21,9 @@ export function getBooks() {
 
         const data = await response.json();
         setData(data);
-        setError(null)
+        setError(null);
       } catch (err) {
-        setError(err)
+        setError(err);
       } finally {
         setLoading(false);
       }
@@ -145,4 +148,54 @@ export async function delete_post(id, token, isbn) {
   } catch (err) {
     return [false, err.message];
   }
+}
+
+export function useAddBook() {
+  const { user } = myUserContext();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [form, loadForm] = useState(null);
+
+  useEffect(() => {
+    if (!form) {
+      return
+    }
+    setLoading(true);
+
+    const addBook = async () => {
+      try {
+
+        const formData = new FormData()
+        for (const key in form) {
+          formData.append(key, form[key])
+        }
+        const results = await fetch(API_ENDPOINTS.GETADDBOOKS, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${user.access}`,
+          },
+          body: formData,
+        });
+
+        if (!results) {
+          const data = await results.json();
+          throw new Error(data.data);
+        }
+
+        const data = await results.json();
+        console.log(data);
+        
+        setData(data);
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    addBook()
+  }, [form]);
+
+  return { data, loading, error, loadForm };
 }

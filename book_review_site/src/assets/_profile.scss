@@ -10,6 +10,10 @@ article {
     gap: .25rem;
     margin-bottom: 3rem;
 
+    h1 {
+        text-transform: capitalize;
+    }
+
     select {
         width: 100%;
     }

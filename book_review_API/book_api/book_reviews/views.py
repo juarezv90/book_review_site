@@ -1,6 +1,6 @@
 from rest_framework import generics,viewsets, views
-from .serilizers import CustomUserSerializer,BookSerializer, ReviewSerializer, ReviewCreateSerializer
-from .models import Book, Review
+from .serilizers import CustomUserSerializer,BookSerializer, ReviewSerializer, ReviewCreateSerializer, ProfileImageSerializer
+from .models import Book, Review, ProfilePicture
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
@@ -8,8 +8,7 @@ from rest_framework import status,filters
 from .permissions import BookPrivileges
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
-import logging
-
+from django.shortcuts import get_object_or_404
 
 CustomUser = get_user_model()
 
@@ -120,6 +119,8 @@ class ProfileView(generics.RetrieveUpdateDestroyAPIView):
     def get(self, request, *args, **kwargs):
         user = request.user
         permissions = user.get_all_permissions()
+        profile_image = ProfilePicture.objects.filter(user=user).first()
+        image_serializer = ProfileImageSerializer(profile_image, context={'request':request})
         user_data = {
             'id':user.id,
             'username':user.username,
@@ -127,6 +128,7 @@ class ProfileView(generics.RetrieveUpdateDestroyAPIView):
             'first_name':user.first_name,
             'last_name':user.last_name,
             'permissions':list(permissions),
+            'profile_image':image_serializer.data if profile_image else None,
         }
         return Response(user_data, status=status.HTTP_200_OK)
 
