@@ -6,9 +6,9 @@ const API_ENDPOINTS = {
     GETADDBOOKS: `${API_BASE_URL}/api/books/`,
     LOGINTOKEN:`${API_BASE_URL}/api/token/`,
     REFRESHTOKEN:"",
-    VERIFYTOKEN:`${API_BASE_URL}/api/token/verify`,
+    VERIFYTOKEN:`${API_BASE_URL}/api/token/verify/`,
     GETSINGLEBOOK:`${API_BASE_URL}/books/`,
-    GETPROFILE:`${API_BASE_URL}/user/profile`,
+    GETPROFILE:`${API_BASE_URL}/user/profile/`,
     REGISTER:`${API_BASE_URL}/register/`,
     USERREVIEWS:`${API_BASE_URL}/profile/reviews`
 }
