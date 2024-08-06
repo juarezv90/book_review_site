@@ -37,7 +37,7 @@ function Login() {
       setUser(result);
       sessionStorage.setItem("access", result.access);
       sessionStorage.setItem("refresh", result.refresh);
-      navigate("/user/profile/");
+      navigate("/");
     }
   };
 

@@ -1,8 +1,10 @@
+import API_ENDPOINTS from "../apiConfig";
+
 export async function userLogin(userData) {
-  const url = "http://127.0.0.1:8000/api/token/";
+  
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(API_ENDPOINTS.LOGINTOKEN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,13 +25,12 @@ export async function userLogin(userData) {
 }
 
 export async function verifyToken(token) {
-  const url = "http://127.0.0.1:8000/api/token/verify/";
 
   try {
     if (!token) {
       throw new Error("no token stored");
     }
-    const response = await fetch(url, {
+    const response = await fetch(API_ENDPOINTS.VERIFYTOKEN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,10 +52,9 @@ export async function verifyToken(token) {
 }
 
 export async function fetchProfile(token) {
-  const url = "http://127.0.0.1:8000/user/profile";
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(API_ENDPOINTS.GETPROFILE, {
       method: "GET",
       headers: {
         "Content-Type": "applications/josn",
@@ -79,10 +79,9 @@ export async function fetchProfile(token) {
 export async function getUserReviews(token) {}
 
 export async function createNewUser(formdata) {
-  const url = "http://127.0.0.1:8000/register/";
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(API_ENDPOINTS.REGISTER, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

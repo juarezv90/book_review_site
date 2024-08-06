@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { getBooks } from "../api_calls/getBooks";
 import Book from "./Book";
 import PaginationBar from "./PaginationBar";
+import API_ENDPOINTS from "../apiConfig";
 
 function SearchResultsPage() {
   const { search } = useParams();
   const searchedTerm = search.split("=")
-  const url = "http://127.0.0.1:8000/api/books?" + search;
+  const url = API_ENDPOINTS.GETADDBOOKS + search;
   const { data, loading,error, setUrl } = getBooks();
   
   useEffect(() => {

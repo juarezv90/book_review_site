@@ -22,7 +22,6 @@ function LeaveReview({ isbn }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(review);
     const [success, result] = await leaveReview(review);
 
     if(!success) {

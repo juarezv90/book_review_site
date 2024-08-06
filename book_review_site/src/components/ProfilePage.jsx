@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { myUserContext } from "../App";
 import { fetchProfile } from "../api_calls/userLogin";
 import { delete_post } from "../api_calls/getBooks";
+import API_ENDPOINTS from "../apiConfig";
 
 function ProfilePage() {
   const { user, profile, setProfile } = myUserContext();
   const [reviews, setReviews] = useState(null);
   const [reviewSelection, setReviewSelection] = useState(null);
-  const reviewsUrl = "http://127.0.0.1:8000/profile/reviews";
 
   useEffect(() => {
     if (user.access) {
@@ -23,7 +23,7 @@ function ProfilePage() {
 
   const handleGetUserReviews = async () => {
     try {
-      const response = await fetch(reviewsUrl, {
+      const response = await fetch(API_ENDPOINTS.USERREVIEWS, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

@@ -11,9 +11,8 @@ const formTemplate = {
   isbn: "",
 };
 
-// TODO: need to add functions to handle updataing state
-// TODO:will need to write function that send POST request to server with data
-// TODO:review getting file from input:file.
+//TODO: Need to complete displaying return success and error on screen
+
 function AddBookForm() {
   const [form, setForm] = useState(formTemplate);
   const [preview, setPreview] = useState(null);

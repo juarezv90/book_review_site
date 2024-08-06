@@ -28,6 +28,7 @@ function Signup() {
     e.preventDefault();
 
     const [success, result] = await createNewUser(formData)
+    
     if (!success) {
       setError(result)
       setTimeout(() => {

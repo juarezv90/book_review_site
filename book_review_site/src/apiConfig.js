@@ -4,10 +4,13 @@ const API_BASE_URL = 'http://127.0.0.1:8000';
 
 const API_ENDPOINTS = {
     GETADDBOOKS: `${API_BASE_URL}/api/books/`,
-    LOGIN:"",
+    LOGINTOKEN:`${API_BASE_URL}/api/token/`,
     REFRESHTOKEN:"",
-    GETSINGLEBOOK:"",
-    GETPROFILE:""
+    VERIFYTOKEN:`${API_BASE_URL}/api/token/verify`,
+    GETSINGLEBOOK:`${API_BASE_URL}/books/`,
+    GETPROFILE:`${API_BASE_URL}/user/profile`,
+    REGISTER:`${API_BASE_URL}/register/`,
+    USERREVIEWS:`${API_BASE_URL}/profile/reviews`
 }
 
 export default API_ENDPOINTS

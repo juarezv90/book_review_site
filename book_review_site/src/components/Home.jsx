@@ -3,13 +3,13 @@ import Book from "./Book.jsx";
 import { getBooks } from "../api_calls/getBooks.js";
 import Hero from "./Hero.jsx";
 import PaginationBar from "./PaginationBar.jsx";
+import API_ENDPOINTS from "../apiConfig.js";
 
 function Home() {
-  const url = "http://127.0.0.1:8000/api/books"
   const { data, loading, setUrl } = getBooks();
 
   useEffect(() => {
-    setUrl(url)
+    setUrl(API_ENDPOINTS.GETADDBOOKS)
   }, [])
 
   if (loading) return <p>Loading</p>;

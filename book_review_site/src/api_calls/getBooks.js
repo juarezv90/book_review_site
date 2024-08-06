@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import API_ENDPOINTS from "../apiConfig";
 import { myUserContext } from "../App";
-import { Form } from "react-router-dom";
 
 export function getBooks() {
   const [data, setData] = useState([]);
@@ -36,7 +35,7 @@ export function getBooks() {
 }
 
 export function useBookData(isbn) {
-  const url = "http://127.0.0.1:8000/books/" + isbn;
+  const url = API_ENDPOINTS.GETSINGLEBOOK + isbn;
   const [book, setBook] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [bookLoading, setBookLoading] = useState(false);
@@ -67,7 +66,7 @@ export function useBookData(isbn) {
   }, [isbn]);
 
   useEffect(() => {
-    const url = "http://127.0.0.1:8000/books/" + isbn + "/reviews/";
+    const url = API_ENDPOINTS.GETSINGLEBOOK + isbn + "/reviews/";
     setReviewsLoading(true);
 
     const fetchReviews = async () => {
@@ -93,7 +92,7 @@ export function useBookData(isbn) {
 }
 
 export async function leaveReview(review) {
-  const url = `http://127.0.0.1:8000/books/${review.isbn}/makereviews/`;
+  const url = `${API_ENDPOINTS.GETSINGLEBOOK}${review.isbn}/makereviews/`;
 
   try {
     const response = await fetch(url, {
@@ -123,7 +122,7 @@ export async function leaveReview(review) {
 }
 
 export async function delete_post(id, token, isbn) {
-  const url = `http://127.0.0.1:8000/books/${isbn}/makereviews/`;
+  const url = `${API_ENDPOINTS.GETSINGLEBOOK}${isbn}/makereviews/`;
 
   try {
     const response = await fetch(url, {
@@ -159,16 +158,15 @@ export function useAddBook() {
 
   useEffect(() => {
     if (!form) {
-      return
+      return;
     }
     setLoading(true);
 
     const addBook = async () => {
       try {
-
-        const formData = new FormData()
+        const formData = new FormData();
         for (const key in form) {
-          formData.append(key, form[key])
+          formData.append(key, form[key]);
         }
         const results = await fetch(API_ENDPOINTS.GETADDBOOKS, {
           method: "POST",
@@ -185,7 +183,7 @@ export function useAddBook() {
 
         const data = await results.json();
         console.log(data);
-        
+
         setData(data);
       } catch (err) {
         console.log(err.message);
@@ -194,7 +192,7 @@ export function useAddBook() {
       }
     };
 
-    addBook()
+    addBook();
   }, [form]);
 
   return { data, loading, error, loadForm };
