@@ -78,19 +78,19 @@ export async function fetchProfile(token) {
 
 export async function getUserReviews(token) {}
 
-export async function createNewUser(formdata) {
+export async function createNewUser(form) {
 
   try {
+
     const response = await fetch(API_ENDPOINTS.REGISTER, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formdata),
+      body: form,
     });
 
     if (!response.ok) {
       const err = await response.json();
+      console.log(err);
+      
       throw new Error(err.detail || "Error processing form");
     }
 

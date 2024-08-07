@@ -7,7 +7,7 @@
     #sign_up_form{
         display: flex;
         flex-direction: column;
-        max-width: 400px;
+        max-width: 500px;
         padding: 1rem;
         gap: 1rem;
         place-self: center;
@@ -15,6 +15,7 @@
             display: flex;
             width: 100%;
             gap: 1rem;
+            align-items: center;
             input {
                 width: 100%;
             }

@@ -74,3 +74,22 @@ class ProfileImageSerializer(serializers.ModelSerializer):
         if request is not None:
             return request.build_absolute_uri(obj.profile_image.url)
         return obj.profile_image.url
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    profile_image_data=ProfileImageSerializer(write_only=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'profile_image_data']
+
+    def create(self, validated_data):
+        profile_data = validated_data.pop('profile_image_data')
+        user = CustomUser.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            password=validated_data['password'],
+        )
+        ProfilePicture.objects.create(user=user, **profile_data)
+        return user

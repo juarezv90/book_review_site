@@ -9,7 +9,7 @@ function Hero() {
   return (
     <section id="hero">
       <div id="banner" style={{backgroundImage:"url('./centerbook.webp')"}}>
-        {!user && <button>Sign Up</button>}
+        {!user && <button onClick={() => navigate('user/signup')}>Sign Up</button>}
       </div>
     </section>
   );

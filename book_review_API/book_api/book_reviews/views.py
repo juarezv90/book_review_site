@@ -1,5 +1,5 @@
 from rest_framework import generics,viewsets, views
-from .serilizers import CustomUserSerializer,BookSerializer, ReviewSerializer, ReviewCreateSerializer, ProfileImageSerializer
+from .serilizers import CustomUserSerializer,BookSerializer, ReviewSerializer, ReviewCreateSerializer, ProfileImageSerializer, UserProfileSerializer
 from .models import Book, Review, ProfilePicture
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
@@ -14,9 +14,12 @@ CustomUser = get_user_model()
 
 # Create your views here.
 class CreateUserView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = UserProfileSerializer
     permission_classes=[AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
 
 class AddBookView(viewsets.ModelViewSet):
     queryset = Book.objects.all()
