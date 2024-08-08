@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useAddBook } from "../api_calls/getBooks";
+import { addBook } from "../api_calls/getBooks";
+import { myUserContext } from "../App";
 
 const formTemplate = {
   title: "",
@@ -14,9 +15,10 @@ const formTemplate = {
 //TODO: Need to complete displaying return success and error on screen
 
 function AddBookForm() {
+  const {user} = myUserContext()
   const [form, setForm] = useState(formTemplate);
   const [preview, setPreview] = useState(null);
-  const { data, loading, error, loadForm } = useAddBook();
+  const [error, setError] = useState("")
 
   const handleTextChanges = (e) => {
     const { name, value, checked, files, type } = e.target;
@@ -31,18 +33,21 @@ function AddBookForm() {
     }));
   };
 
-  const handleAdd = (e) => {
+  const handleAdd = async(e) => {
     e.preventDefault();
-    loadForm(form);
-  };
 
-  console.log(form);
+    const [success, data] = await addBook(form,user)
+
+    if(!success) {
+      setError(data)
+    }
+  };  
   
 
   return (
     <section className="addBook">
       <h2>Add Book to System</h2>
-      <form id="add_book" onSubmit={handleAdd}>
+      <form id="add_book" onSubmit={handleAdd} encType="multipart/from-data">
         <input
           type="text"
           name="title"
@@ -58,6 +63,7 @@ function AddBookForm() {
           value={form.author}
           placeholder="Book Author"
           onChange={handleTextChanges}
+          required
         />
         <div className="book_image">
           <label htmlFor="book_img">Book Cover: </label>
@@ -66,6 +72,7 @@ function AddBookForm() {
             name="book_img"
             id="book_image"
             onChange={handleTextChanges}
+            required
           />
         </div>
         <div className="preview">{preview && <img src={preview} alt="" />}</div>
@@ -75,6 +82,7 @@ function AddBookForm() {
           value={form.about_book}
           placeholder="Book preface"
           onChange={handleTextChanges}
+          required
         ></textarea>
         <input
           type="number"
@@ -82,12 +90,14 @@ function AddBookForm() {
           value={form.isbn}
           onChange={handleTextChanges}
           placeholder="ISBN"
+          required
         />
         <input
           type="date"
           name="published_date"
           value={form.published_date}
           onChange={handleTextChanges}
+          required
         />
         <div className="series">
           <label htmlFor="series">Is a series:</label>
@@ -99,6 +109,7 @@ function AddBookForm() {
             onChange={handleTextChanges}
           />
         </div>
+        {error && <p className="error">{error}</p>}
         <button>Submit</button>
       </form>
     </section>

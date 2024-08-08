@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import API_ENDPOINTS from "../apiConfig";
-import { myUserContext } from "../App";
 
 export function getBooks() {
   const [data, setData] = useState([]);
@@ -10,6 +9,7 @@ export function getBooks() {
 
   useEffect(() => {
     setLoading(true);
+    
     const handleGettingBook = async () => {
       try {
         const response = await fetch(url);
@@ -149,51 +149,30 @@ export async function delete_post(id, token, isbn) {
   }
 }
 
-export function useAddBook() {
-  const { user } = myUserContext();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [form, loadForm] = useState(null);
+export async function addBook(loadedForm, user) {
+  const formData = new FormData();
 
-  useEffect(() => {
-    if (!form) {
-      return;
+  for (const key in loadedForm) {
+    formData.append(key, loadedForm[key]);
+  }
+
+  try {
+    const result = await fetch(API_ENDPOINTS.GETADDBOOKS, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${user.access}`,
+      },
+      body: formData,
+    });
+
+    if (!result.ok) {
+      const data = await result.json();
+      throw new Error(data.details || "Error adding book please check data");
     }
-    setLoading(true);
 
-    const addBook = async () => {
-      try {
-        const formData = new FormData();
-        for (const key in form) {
-          formData.append(key, form[key]);
-        }
-        const results = await fetch(API_ENDPOINTS.GETADDBOOKS, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${user.access}`,
-          },
-          body: formData,
-        });
-
-        if (!results) {
-          const data = await results.json();
-          throw new Error(data.data);
-        }
-
-        const data = await results.json();
-        console.log(data);
-
-        setData(data);
-      } catch (err) {
-        console.log(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    addBook();
-  }, [form]);
-
-  return { data, loading, error, loadForm };
+    const data = await result.json();
+    return [true, data];
+  } catch (err) {
+    return [false, err.message];
+  }
 }

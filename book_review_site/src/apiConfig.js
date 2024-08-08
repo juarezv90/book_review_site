@@ -5,7 +5,7 @@ const API_BASE_URL = 'http://127.0.0.1:8000';
 const API_ENDPOINTS = {
     GETADDBOOKS: `${API_BASE_URL}/api/books/`,
     LOGINTOKEN:`${API_BASE_URL}/api/token/`,
-    REFRESHTOKEN:"",
+    SEARCHURL:`${API_BASE_URL}/api/books?`,
     VERIFYTOKEN:`${API_BASE_URL}/api/token/verify/`,
     GETSINGLEBOOK:`${API_BASE_URL}/books/`,
     GETPROFILE:`${API_BASE_URL}/user/profile/`,

@@ -8,7 +8,7 @@ import API_ENDPOINTS from "../apiConfig";
 function SearchResultsPage() {
   const { search } = useParams();
   const searchedTerm = search.split("=")
-  const url = API_ENDPOINTS.GETADDBOOKS + search;
+  const url = API_ENDPOINTS.SEARCHURL+search;
   const { data, loading,error, setUrl } = getBooks();
   
   useEffect(() => {

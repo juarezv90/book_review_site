@@ -64,17 +64,20 @@ function Signup() {
     }
   };
 
-  console.log(formData);
-
   return (
     <section id="signup">
-      <form onSubmit={handleSubmit} id="sign_up_form" encType="multipart/form-data">
+      <form
+        onSubmit={handleSubmit}
+        id="sign_up_form"
+        encType="multipart/form-data"
+      >
         <input
           type="text"
           name="username"
           placeholder="Username"
           value={formData.username}
           onChange={handleChange}
+          required
         />
         <input
           type="password"
@@ -82,6 +85,7 @@ function Signup() {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
+          required
         />
         <input
           type="email"
@@ -89,6 +93,7 @@ function Signup() {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
+          required
         />
         <p>
           <input
@@ -97,6 +102,7 @@ function Signup() {
             placeholder="First Name"
             value={formData.first_name}
             onChange={handleChange}
+            required
           />
           <input
             type="text"
@@ -104,6 +110,7 @@ function Signup() {
             placeholder="Last Name"
             value={formData.last_name}
             onChange={handleChange}
+            required
           />
         </p>
         <p>
@@ -113,6 +120,7 @@ function Signup() {
             name="profile_image_data"
             accept="image/png, image/jpeg, image/webp"
             onChange={handleChange}
+            required
           />
         </p>
         {preview && (
