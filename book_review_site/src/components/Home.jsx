@@ -6,7 +6,7 @@ import PaginationBar from "./PaginationBar.jsx";
 import API_ENDPOINTS from "../apiConfig.js";
 
 function Home() {
-  const { data, loading, setUrl } = getBooks();
+  let { data, loading, setUrl } = getBooks();
 
   useEffect(() => {
     setUrl(API_ENDPOINTS.GETADDBOOKS)
@@ -14,18 +14,41 @@ function Home() {
 
   if (loading) return <p>Loading</p>;
 
+  function loadFakeData() {
+    const items = [];
+    for (let i = 0; i < 10; i++) {
+      items.push({
+        title: "Hello world",
+        isbn: 38294293234,
+        book_img: "./insilentgrave.jpg",
+        author: "john doe",
+        published_date: "yesterday",
+        number_of_likes: 20,
+      })
+    }
+
+    return items
+  }
+
+  data = {
+    results: [
+      ...loadFakeData()
+    ]
+  }
+
   return (
     <>
       <section className="home">
         <Hero />
-        <div id="book_container">
+        <h2>Books reviewed this week</h2>
+        <article id="book_container">
           {data.results &&
             data.results.map((book, key) => (
               <Book book={book} key={book.isbn} />
             ))}
-        </div>
+          {data.next || data.previous ? <PaginationBar page_count={20} pages_data={[data, url]} setUrl={setUrl} /> : ""}
+        </article>
       </section>
-      {data.next || data.previous ? <PaginationBar page_count={20} pages_data={[data,url]} setUrl={setUrl}/> : ""}
     </>
   );
 }

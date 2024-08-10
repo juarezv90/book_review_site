@@ -7,11 +7,9 @@ function Hero() {
   const navigate = useNavigate()
 
   return (
-    <section id="hero">
-      <div id="banner" style={{backgroundImage:"url('./centerbook.webp')"}}>
+      <article id="hero" style={{backgroundImage:"url('./centerbook.webp')"}}>
         {!user && <button onClick={() => navigate('user/signup')}>Sign Up</button>}
-      </div>
-    </section>
+      </article>
   );
 }
 

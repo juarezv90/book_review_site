@@ -27,12 +27,12 @@ function App() {
           <main>
             <Routes>
               <Route exact path="/" Component={Home} />
-              <Route exact path="/login" Component={Login} />
-              <Route path="books/:isbn" Component={SingleBook} />
-              <Route path="book-search/:search" Component={SearchResultsPage} />
-              <Route path="user/profile" Component={ProfilePage}/>
-              <Route path="user/signUp" Component={Signup}/>
-              <Route path="add-book-form" Component={AddBookForm} />
+              {/* <Route exact path="/login" Component={Login} /> */}
+              {/* <Route path="books/:isbn" Component={SingleBook} /> */}
+              {/* <Route path="book-search/:search" Component={SearchResultsPage} /> */}
+              {/* <Route path="user/profile" Component={ProfilePage}/> */}
+              {/* <Route path="user/signUp" Component={Signup}/> */}
+              {/* <Route path="add-book-form" Component={AddBookForm} /> */}
             </Routes>
           </main>
           <Footer />

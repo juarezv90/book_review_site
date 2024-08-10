@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Book({ book }) {
+  console.log(book);
+  
   return (
     <Link key={book.isbn} to={`/books/${book.isbn}`}>
       <article className="book_articles">
