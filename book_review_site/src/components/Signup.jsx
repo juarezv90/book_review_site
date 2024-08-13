@@ -71,6 +71,7 @@ function Signup() {
         id="sign_up_form"
         encType="multipart/form-data"
       >
+        <h2>Sign up</h2>
         <input
           type="text"
           name="username"
@@ -95,7 +96,7 @@ function Signup() {
           onChange={handleChange}
           required
         />
-        <p>
+        <p className="names">
           <input
             type="text"
             name="first_name"
@@ -125,7 +126,7 @@ function Signup() {
         </p>
         {preview && (
           <p>
-            <img src={preview} alt="" />
+            <img src={preview} alt="preview portfolio image" />
           </p>
         )}
         <button>Submit</button>

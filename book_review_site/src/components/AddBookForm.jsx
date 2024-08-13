@@ -15,10 +15,10 @@ const formTemplate = {
 //TODO: Need to complete displaying return success and error on screen
 
 function AddBookForm() {
-  const {user} = myUserContext()
+  const { user } = myUserContext();
   const [form, setForm] = useState(formTemplate);
   const [preview, setPreview] = useState(null);
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   const handleTextChanges = (e) => {
     const { name, value, checked, files, type } = e.target;
@@ -33,21 +33,24 @@ function AddBookForm() {
     }));
   };
 
-  const handleAdd = async(e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
 
-    const [success, data] = await addBook(form,user)
+    const [success, data] = await addBook(form, user);
 
-    if(!success) {
-      setError(data)
+    if (!success) {
+      setError(data);
     }
-  };  
-  
+  };
 
   return (
-    <section className="addBook">
+    <section id="add_book">
       <h2>Add Book to System</h2>
-      <form id="add_book" onSubmit={handleAdd} encType="multipart/from-data">
+      <form
+        id="add_book_form"
+        onSubmit={handleAdd}
+        encType="multipart/from-data"
+      >
         <input
           type="text"
           name="title"
@@ -92,15 +95,18 @@ function AddBookForm() {
           placeholder="ISBN"
           required
         />
-        <input
-          type="date"
-          name="published_date"
-          value={form.published_date}
-          onChange={handleTextChanges}
-          required
-        />
+        <p className="publish_">
+          <label htmlFor="published_date">Date Published:</label>
+          <input
+            type="date"
+            name="published_date"
+            value={form.published_date}
+            onChange={handleTextChanges}
+            required
+          />
+        </p>
         <div className="series">
-          <label htmlFor="series">Is a series:</label>
+          <label htmlFor="series">Part of series:</label>
           <input
             type="checkbox"
             name="series"
@@ -109,6 +115,14 @@ function AddBookForm() {
             onChange={handleTextChanges}
           />
         </div>
+        {form.series && (
+          <>
+            <input type="text" placeholder="name of Series" />
+            <p className="number_in_collection">
+              Book number in series: <input type="number" />
+            </p>
+          </>
+        )}
         {error && <p className="error">{error}</p>}
         <button>Submit</button>
       </form>

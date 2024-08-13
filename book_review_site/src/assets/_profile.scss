@@ -1,0 +1,35 @@
+@import "./variables";
+
+section#profile_page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  article.profile {
+    display: flex;
+    flex-direction: column;
+
+    .profile_image {
+        border-radius: 20rem;
+        margin: 0 auto;
+    }
+
+    .reviews_container {
+      margin-top: 1rem;
+      p {
+        font-weight: 600;
+      }
+      select {
+        width: 100%;
+      }
+
+      select:focus {
+        outline: none;
+      }
+    }
+  }
+}

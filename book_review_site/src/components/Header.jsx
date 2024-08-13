@@ -7,7 +7,17 @@ import { inner_site_links } from "../apiConfig";
 
 function Header() {
   const { user, setUser, profile, setProfile } = myUserContext();
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowMenu(false)
+    };
+
+    window.addEventListener("scroll", handleScroll)
+
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, []);
 
   useEffect(() => {
     const token = sessionStorage;
@@ -50,13 +60,25 @@ function Header() {
         <h1>The Book Club</h1>
       </Link>
       <BookSearch />
-      <input type="button" className="menu_button" value="|||" onClick={() => setShowMenu(!showMenu)} onBlur={() => setShowMenu(false)} />
+      <input
+        type="button"
+        className="menu_button"
+        value="|||"
+        onClick={() => setShowMenu(!showMenu)}
+        onBlur={() => setShowMenu(false)}
+      />
       <ul
         className="mobile_nav hide"
         id="navlist"
-        style={showMenu ? { height: '80vh' } : { height: 0, opacity:0, padding:0, margin:0}}
+        style={
+          showMenu
+            ? { height: "80vh" }
+            : { height: 0, opacity: 0, padding: 0, margin: 0 }
+        }
       >
-        {inner_site_links(user).map((link, key) => loadlinks(link, key))}
+        {inner_site_links(user, profile).map((link, key) =>
+          loadlinks(link, key)
+        )}
       </ul>
     </header>
   );

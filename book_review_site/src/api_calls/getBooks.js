@@ -31,7 +31,7 @@ export function getBooks() {
     handleGettingBook();
   }, [url]);
 
-  return { data, loading, error, setUrl };
+  return { data, loading, error, setUrl, url };
 }
 
 export function useBookData(isbn) {

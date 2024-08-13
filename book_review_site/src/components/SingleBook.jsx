@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { delete_post, useBookData } from "../api_calls/getBooks";
 import LeaveReview from "./LeaveReview";
 import { myUserContext } from "../App";
+import Reviews from "./Reviews";
 
 function SingleBook() {
   const { isbn } = useParams();
@@ -11,15 +12,13 @@ function SingleBook() {
   const { user } = myUserContext();
 
   const handleDelete = async (id) => {
-    const [success, result] = await delete_post(id, user.access, isbn)
-    if(!success){
+    const [success, result] = await delete_post(id, user.access, isbn);
+    if (!success) {
       console.log(result);
     } else {
-      window.location.reload()
+      window.location.reload();
     }
-  }
-
-  console.log(reviews.results);
+  };
 
   if (bookLoading) return <p>Loading book, please wait... </p>;
 
@@ -30,39 +29,32 @@ function SingleBook() {
       {book && (
         <section className="single_book">
           <article className="book_container">
-            <img src={book.book_img} alt="" width={300}/>
+            <img src={book.book_img} alt="" width={300} />
             <br />
             <h3 className="title">{book.title}</h3>
             <hr />
             <br />
+            <p>Likes: {book.number_of_likes}</p>
             <p>Author: {book.author}</p>
             <p>ISBN: {book.isbn}</p>
             <p>Published: {book.published_date}</p>
             <p>About the book</p>
-            {book &&
-              book.about_book?.split("\n").map((data, key) => (
-                <p className="book_text" key={key}>
-                  {data}
-                </p>
-              ))}
-            <p>Likes: {book.number_of_likes}</p>
+            <div className="text_container">
+              {book &&
+                book.about_book?.split("\n").map((data, key) => (
+                  <p className="book_text" key={key}>
+                    {data}
+                  </p>
+                ))}
+            </div>
           </article>
-          <article className="reviews">
+          <article id="reviews">
             <h3>Reviews:</h3>
             {reviewsLoading ? (
               <p>Reviews loading</p>
             ) : reviews.results?.length > 0 ? (
               reviews.results.map((review) => (
-                <div className="review" key={review.id}>
-                  <p className="user">{review.user}</p>
-                  <p className="date">Reviewed: {review.date_reviewed}</p>
-                  <p className="text">{review.review_text}</p>
-                  <p className="rating">Rating: {review.review_rating}</p>
-                  <div className="delEdit">
-                    <span onClick={() => handleDelete(review.id)}>Delete</span>
-                    <span>Edit</span>
-                  </div>
-                </div>
+               <Reviews review={review} handleDelete={handleDelete} key={review.id}/>
               ))
             ) : (
               <p>No Reviews Found</p>
