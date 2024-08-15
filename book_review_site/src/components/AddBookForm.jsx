@@ -10,6 +10,8 @@ const formTemplate = {
   series: false,
   published_date: "",
   isbn: "",
+  book_series: "",
+  number_in_series: "",
 };
 
 //TODO: Need to complete displaying return success and error on screen
@@ -40,6 +42,9 @@ function AddBookForm() {
 
     if (!success) {
       setError(data);
+    } else {
+      setForm(formTemplate)
+      
     }
   };
 
@@ -117,9 +122,21 @@ function AddBookForm() {
         </div>
         {form.series && (
           <>
-            <input type="text" placeholder="name of Series" />
+            <input
+              type="text"
+              placeholder="name of Series"
+              name="book_series"
+              value={form.book_series}
+              onChange={handleTextChanges}
+            />
             <p className="number_in_collection">
-              Book number in series: <input type="number" />
+              Book number in series:{" "}
+              <input
+                type="number"
+                name="number_in_series"
+                value={form.number_in_series}
+                onChange={handleTextChanges}
+              />
             </p>
           </>
         )}

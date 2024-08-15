@@ -32,7 +32,7 @@ function App() {
               <Route path="books/:isbn" Component={SingleBook} />
               <Route path="user/profile" Component={ProfilePage}/>
               <Route path="add-book-form" Component={AddBookForm} />
-              {/* <Route path="book-search/:search" Component={SearchResultsPage} /> */}
+              <Route path="book-search/:search" Component={SearchResultsPage} />
             </Routes>
           </main>
           <Footer />

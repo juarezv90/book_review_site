@@ -9,6 +9,7 @@ function SingleBook() {
   const { isbn } = useParams();
   const { book, bookError, bookLoading, reviewsLoading, reviews } =
     useBookData(isbn);
+        
   const { user } = myUserContext();
 
   const handleDelete = async (id) => {
@@ -29,19 +30,20 @@ function SingleBook() {
       {book && (
         <section className="single_book">
           <article className="book_container">
-            <img src={book.book_img} alt="" width={300} />
+            <img src={`http://localhost:8000${book.book.book_img}`} alt="" width={300} />
             <br />
-            <h3 className="title">{book.title}</h3>
+            <h3 className="title">{book.book.title}</h3>
             <hr />
             <br />
-            <p>Likes: {book.number_of_likes}</p>
-            <p>Author: {book.author}</p>
-            <p>ISBN: {book.isbn}</p>
-            <p>Published: {book.published_date}</p>
+            <p>Likes: {book.book.number_of_likes}</p>
+            <p>Author: {book.author.author}</p>
+            <p>ISBN: {book.book.isbn}</p>
+            <p>Published: {book.book.published_date}</p>
+            {book.series && <p>Book {book.book.number_in_series} of the {book.series.book_series} series</p>}
             <p>About the book</p>
             <div className="text_container">
-              {book &&
-                book.about_book?.split("\n").map((data, key) => (
+              {book.book &&
+                book.book.about_book?.split("\n").map((data, key) => (
                   <p className="book_text" key={key}>
                     {data}
                   </p>

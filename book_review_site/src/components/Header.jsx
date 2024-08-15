@@ -11,12 +11,12 @@ function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowMenu(false)
+      setShowMenu(false);
     };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -47,11 +47,19 @@ function Header() {
   const loadlinks = (link, key) => {
     if (link.visible) {
       return (
-        <Link to={link.link} relative="path" key={key} className="menuLinks">
-          <li>{link.name}</li>
+        <Link to={link.link} relative="path" key={key} className="menuLinks" aria-description="list-item">
+          <li className="menu_links">{link.name}</li>
         </Link>
       );
     }
+  };
+
+  const giveHeight = () => {
+    const items = document.getElementsByClassName("menu_links");
+
+    const height = items[0].scrollHeight + 10;
+
+    return `${height * items.length + 20}px`;
   };
 
   return (
@@ -67,19 +75,19 @@ function Header() {
         onClick={() => setShowMenu(!showMenu)}
         onBlur={() => setShowMenu(false)}
       />
-      <ul
+      <menu
         className="mobile_nav hide"
         id="navlist"
         style={
           showMenu
-            ? { height: "80vh" }
+            ? { height: giveHeight() }
             : { height: 0, opacity: 0, padding: 0, margin: 0 }
         }
       >
         {inner_site_links(user, profile).map((link, key) =>
           loadlinks(link, key)
         )}
-      </ul>
+      </menu>
     </header>
   );
 }

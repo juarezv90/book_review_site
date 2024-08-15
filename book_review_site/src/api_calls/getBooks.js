@@ -167,6 +167,8 @@ export async function addBook(loadedForm, user) {
 
     if (!result.ok) {
       const data = await result.json();
+      console.log(data);
+      
       throw new Error(data.details || "Error adding book please check data");
     }
 
