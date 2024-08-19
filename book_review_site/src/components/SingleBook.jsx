@@ -4,6 +4,7 @@ import { delete_post, useBookData } from "../api_calls/getBooks";
 import LeaveReview from "./LeaveReview";
 import { myUserContext } from "../App";
 import Reviews from "./Reviews";
+import { API_BASE_URL } from "../apiConfig";
 
 function SingleBook() {
   const { isbn } = useParams();
@@ -30,7 +31,7 @@ function SingleBook() {
       {book && (
         <section className="single_book">
           <article className="book_container">
-            <img src={`http://localhost:8000${book.book.book_img}`} alt="" width={300} />
+            <img src={`${API_BASE_URL}${book.book.book_img}`} alt="" width={300} />
             <br />
             <h3 className="title">{book.book.title}</h3>
             <hr />

@@ -14,12 +14,11 @@ function Home() {
   
   if (loading) return <p>Loading</p>;
   
-
   return (
     <>
       <section className="home">
         <Hero />
-        <h2>Books reviewed this week</h2>
+        <h2>Current Books</h2>
         <article id="book_container">
           {data &&
             data.map((book, key) => (

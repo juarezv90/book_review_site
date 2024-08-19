@@ -21,6 +21,14 @@ section.home {
     justify-content: end;
     align-items: end;
     padding: 1rem;
+
+    .hero_text {
+      background-color: transparentize($background-accent-color, $amount: .1);
+      padding: 5px;
+      margin-bottom: auto;
+      text-align: center;
+      border-radius: 20px;
+    }
   }
 
   #book_container {

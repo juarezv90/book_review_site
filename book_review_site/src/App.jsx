@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <UserContext.Provider value={{ user, setUser, profile, setProfile }}>
-        <Router basename="/">
+        <Router basename="/bookreviewsite">
           <Header />
           <main>
             <Routes>

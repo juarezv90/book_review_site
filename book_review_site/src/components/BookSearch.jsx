@@ -10,6 +10,7 @@ function BookSearch() {
   }
 
   const handeSearchClick = (e)=> {
+    e.preventDefault()
     navigate(`book-search/search=${search}`)
   }
   

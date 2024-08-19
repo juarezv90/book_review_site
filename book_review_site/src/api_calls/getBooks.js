@@ -4,7 +4,7 @@ import API_ENDPOINTS from "../apiConfig";
 export function getBooks() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [url, setUrl] = useState();
 
   useEffect(() => {
@@ -13,14 +13,14 @@ export function getBooks() {
     const handleGettingBook = async () => {
       try {
         const response = await fetch(url);
+        
         if (!response.ok) {
           const data = await response.json();
           throw new Error(data || "error loading book");
         }
-
+        
         const data = await response.json();
         setData(data);
-        setError(null);
       } catch (err) {
         setError(err);
       } finally {

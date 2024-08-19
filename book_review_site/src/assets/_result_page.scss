@@ -1,0 +1,17 @@
+@import './variables';
+
+section#search_results {
+    display: flex;
+    flex-direction: column;
+    max-width: 1024px;
+    margin: 0 auto;
+
+    #book_container {
+        display:grid;
+
+        @include md_srn {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+    }
+}

@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../apiConfig";
+
+
 
 function Book({ book }) {
   
   return (
     <Link key={book.isbn} to={`/books/${book.isbn}`}>
       <article className="book_articles">
-        <img src={`http://localhost:8000${book.book_img}`} alt="book image" />
+        <img src={`${API_BASE_URL}${book.book_img}`} alt="book image" />
         <p className="book_title">{book.title}</p>
         <p>Author: {book.author}</p>
         <p>Published: {book.published_date}</p>

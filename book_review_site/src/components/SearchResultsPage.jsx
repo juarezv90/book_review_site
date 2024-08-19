@@ -9,15 +9,13 @@ function SearchResultsPage() {
   const { search } = useParams();
   const searchedTerm = search.split("=")
   const url = API_ENDPOINTS.SEARCHURL+search;
-  const { data, loading,error, setUrl } = getBooks();
+  const { data, loading, error, setUrl } = getBooks();
   
   useEffect(() => {
     setUrl(url)
   },[url])
   
   if (loading) return <p>Loading book search</p>
-
-  if (error != null) return <p>Error unable to get books</p>
   
   return (
     <>
