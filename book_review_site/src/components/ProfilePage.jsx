@@ -27,7 +27,7 @@ function ProfilePage() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${user.access}`,
+          Authorization: `Bearer ${user.access}`,
         },
       });
 
@@ -73,13 +73,14 @@ function ProfilePage() {
     return <p>Loading</p>;
   }
   return (
-    <section className="profile_page">
+    <section id="profile_page">
       <article className="profile">
         <h1>Username: {profile.username}</h1>
         <p>{profile.email}</p>
         <p>{profile.first_name + " " + profile.last_name}</p>
         {profile.profile_image && (
           <>
+            <p>Avatar:</p>
             <img
               src={profile.profile_image.image_url}
               alt="profile Image"
@@ -89,7 +90,7 @@ function ProfilePage() {
           </>
         )}
         {reviews && (
-          <>
+          <div className="reviews_container">
             <p>Your Reviews:</p>
             <select name="reviews" id="reviews" multiple>
               {reviews.review_list?.map((review) => (
@@ -107,7 +108,7 @@ function ProfilePage() {
                 </option>
               ))}
             </select>
-          </>
+          </div>
         )}
       </article>
       {reviewSelection && (

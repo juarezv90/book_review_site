@@ -22,17 +22,17 @@ function App() {
   return (
     <>
       <UserContext.Provider value={{ user, setUser, profile, setProfile }}>
-        <Router basename="/">
+        <Router basename="/bookreviewsite">
           <Header />
           <main>
             <Routes>
               <Route exact path="/" Component={Home} />
               <Route exact path="/login" Component={Login} />
-              <Route path="books/:isbn" Component={SingleBook} />
-              <Route path="book-search/:search" Component={SearchResultsPage} />
-              <Route path="user/profile" Component={ProfilePage}/>
               <Route path="user/signUp" Component={Signup}/>
+              <Route path="books/:isbn" Component={SingleBook} />
+              <Route path="user/profile" Component={ProfilePage}/>
               <Route path="add-book-form" Component={AddBookForm} />
+              <Route path="book-search/:search" Component={SearchResultsPage} />
             </Routes>
           </main>
           <Footer />

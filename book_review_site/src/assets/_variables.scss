@@ -1,5 +1,19 @@
-$primary: #61892f;
-$cta: #86c232;
-$background: #222629;
-$dark-accent: #474b4f;
-$light-accent: #6b6e70;
+@import "./mixins";
+
+// Background color for the main content area
+$background-color: rgba(240, 240, 245, 1); // Light Gray
+
+// Primary text color
+$primary-text-color: rgba(50, 50, 50, 1); // Dark Charcoal
+
+// Secondary text color (subheadings, metadata)
+$secondary-text-color: rgba(60, 90, 120, 0.9); // Muted Dark Blue
+
+// Accent color for buttons, links, and interactive elements
+$accent-color: rgba(0, 128, 128, 1); // Deep Teal
+
+// Highlight color for important information (e.g., ratings, featured reviews)
+$highlight-color: rgba(255, 193, 7, 1); // Warm Gold
+
+// Background color for sections like cards or sidebar areas
+$background-accent-color: rgba(250, 250, 250, 0.95); // Soft Off-White

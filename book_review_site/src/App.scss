@@ -1,54 +1,60 @@
-@use './assets/header';
-@use './assets/footer';
-@use './assets/login';
-@use './assets/book_container'; //used in home component
-@use './assets/single_book';
-@use './assets/hero';
-@use './assets/signup_form';
-@use './assets/profile';
-@use './assets/add_book_form';
-@import './assets/variables.scss';
-
-
-a {
-    text-decoration: none;
-    color: white;
-}
+@import "./assets/variables";
+@import "./assets/header";
+@import "./assets/home";
+@import "./assets/single_book_view";
+@import "./assets/login";
+@import "./assets/leave_review";
+@import "./assets/profile";
+@import "./assets/add_book_form";
+@import "./assets/result_page";
 
 body {
-    color: white;
-    background-color: $background;
-}
-
-
-button {
-    margin-left: 8px;
-    padding: 6px;
-    background-color: $primary;
-    color: $background;
-    border: none;
-    cursor: pointer;
-    transition: 300ms ease-in-out;
-    width: fit-content;
-    padding: .25rem 1.5rem;
-
-    &:hover {
-        background-color: $cta;
-    }
+  background-color: $background-color;
+  color: $primary-text-color;
 }
 
 #root {
-    min-width: 375px;
+  min-width: 375px;
 }
 
 #pagination {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+main {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-row: 2/3 !important;
+  overflow: auto;
 }
 
 .error {
-    color: red;
+  color: red;
+}
+
+footer {
+  display: flex;
+  justify-content: end;
+  padding: 1rem;
+  width: 100%;
+}
+
+button {
+  color: $highlight-color;
+  background-color: $primary-text-color;
+  // border: 1px solid $accent-color;
+  border: none;
+  border-radius: 20px;
+  padding: 4px 10px;
+  transition: 300ms ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $highlight-color;
+    color: $primary-text-color;
+  }
 }

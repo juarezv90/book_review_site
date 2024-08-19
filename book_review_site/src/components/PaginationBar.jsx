@@ -6,8 +6,6 @@ function PaginationBar({ pages_data, page_count = 1, setUrl }) {
   const { next: Next, previous: Prev, count } = data;
   const pageCount = Math.ceil(count / page_count);
 
-  console.log(pageCount);
-
   function handlePageClick(e) {
     const {innerHTML} = e.target
     const newUrl = url+`?limit=${page_count}&offset=${(innerHTML-1)*page_count}`

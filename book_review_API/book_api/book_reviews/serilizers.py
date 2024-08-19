@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Book, Review,ProfilePicture
+from .models import Book, Review,ProfilePicture, Authors, Series
 
 CustomUser = get_user_model()
 
@@ -36,14 +36,37 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
     number_of_likes = serializers.SerializerMethodField()
+    book_series_name = serializers.CharField(write_only=True, required=False)
 
     class Meta:
         model = Book
-        exclude = ['likes']
+        fields = ['series','title', 'book_img', 'about_book', 'book_series_name', 'number_in_series', 'isbn', 'published_date', 'number_of_likes']
+        read_only_fields = ['series']
 
     def get_number_of_likes(self, obj):
         return obj.number_of_likes()
     
+    def create(self, validated_data):
+        book_series_name = validated_data.pop('book_series_name', None)
+        series = None
+        if book_series_name:
+            series, created = Series.objects.get_or_create(book_series=book_series_name)
+            validated_data['series'] = series
+        return super().create(validated_data)
+    
+class AuthorSerializer(serializers.ModelSerializer):
+    book_written = BookSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Authors
+        fields = ['author', 'books_written', 'book_written']
+
+class SeriesSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Series
+        fields = ['book_series']
+
 class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
 

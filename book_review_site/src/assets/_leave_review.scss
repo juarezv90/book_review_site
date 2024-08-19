@@ -1,0 +1,35 @@
+@import "./variables";
+
+section#leave_review {
+    margin-top: 1rem;
+  form#review_form {
+    display: grid;
+    margin: 0 auto;
+    @include md_srn {
+      max-width: 60%;
+    }
+
+    textarea {
+        height: 8rem;
+        padding: 8px;
+        resize: none;
+    }
+
+    fieldset {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+
+      .radio {
+        input {
+          margin: 0 1rem;
+        }
+      }
+    }
+
+    button {
+        width: 200px;
+        margin: 0 auto;
+    }
+  }
+}
